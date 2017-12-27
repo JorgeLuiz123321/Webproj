@@ -8,20 +8,30 @@
   //Log out request
   if(isset($_GET['status']) && $_GET['status'] == 'loggedout'){
     $membership->log_Out();
-    
+  }
+
+  //Valid registration
+  if($_POST && !empty($_POST['r_Uname']) && !empty($_POST['r_Pwd']) && !empty($_POST['r_Email'])){
+    $register_response = $membership->register_User($_POST['r_Uname'], $_POST['r_Pwd'], $_POST['r_Email']);
+    if ($register_response == true){
+      header("location:index.php");
+    }
+    else {
+      echo('<script>console.log("Erro ao cadastrar.")</script>');
+    }
   }
 
   //Valid login request and input
   if($_POST && !empty($_POST['uname']) && !empty($_POST['pwd'])){
-    $response = $membership->validate_User($_POST['uname'], $_POST['pwd']);
-    if ($response == true){
+    $login_response = $membership->validate_User($_POST['uname'], $_POST['pwd']);
+    if ($login_response == true){
       header("location:index.php");
     }
     else {
-      echo("Usuário e senha incorretos.");
+      echo('<script>console.log("Erro ao conectar.")</script>');
     }
   }
-
+ 
 ?>
 
 <!DOCTYPE html>
@@ -336,13 +346,13 @@
         </div>
     
         <div class="container">
-          <label for="uname"><b>Usuário</b></label>
+          <label for="r_Uname"><b>Usuário</b></label>
           <input type="text" placeholder="Usuario" name="r_Uname" required>
     
-          <label for="pwd"><b>E-mail</b></label>
+          <label for="r_Email"><b>E-mail</b></label>
           <input type="email" placeholder="E@mail.com" name="r_Email" required>
 
-          <label for="pwd"><b>Senha</b></label>
+          <label for="r_Pwd"><b>Senha</b></label>
           <input type="password" placeholder="Senha" name="r_Pwd" required>
             
           <button type="submit">Confirmar</button>

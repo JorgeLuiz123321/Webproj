@@ -14,6 +14,15 @@
       } else return false;
     }
 
+    function register_User($r_Uname, $r_Pwd, $r_Email){
+      $mysql = new Mysql();
+      $registration = $mysql->insert_User($r_Uname, md5($r_Pwd), $r_Email);
+
+      if($registration){
+        return true;
+      } else return false;
+    }
+
     function log_Out(){
       if(isset($_SESSION['status'])){
         unset($_SESSION['status']);

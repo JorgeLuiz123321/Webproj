@@ -26,6 +26,10 @@
     offset: 57
   });
 
+  $('#log_Out').click(function() {
+    header(location:"index.php?status=loggedout");  
+  });
+
   // Collapse Navbar
   var navbarCollapse = function() {
     if ($("#mainNav").offset().top > 100) {
